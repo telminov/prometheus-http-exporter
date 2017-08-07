@@ -1,4 +1,5 @@
 targets:
-  - name: Self
+  - name: localhost:9115
     url: http://localhost:9115
     # verify_ssl: false
+

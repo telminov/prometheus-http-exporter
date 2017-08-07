@@ -14,11 +14,9 @@ docker pull telminov/prometheus-http-exporter
 run container interactive
 ```bash
 docker run -it --rm -v .../config.yml:/opt/app/config.yml -p 9115:9115 telminov/prometheus-http-exporter
-
 ```
 
 run container detached
 ```bash
 docker run -d --name http_exporter -v .../config.yml:/opt/app/config.yml -p 9115:9115 telminov/prometheus-http-exporter
-
 ```
