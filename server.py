@@ -1,10 +1,22 @@
+#! /usr/bin/env python
+import argparse
 import yaml
 from aiohttp import web, ClientSession, TCPConnector
 import async_timeout
 
+parser = argparse.ArgumentParser(description='Prometheus HTTP exporter.')
+parser.add_argument('-c', '--config', dest='config', default='config.yml',
+                    help='Path to configuration yaml-file. Default config.yml')
+parser.add_argument('--host', dest='host', default='0.0.0.0',
+                    help='HTTP server host. Default 0.0.0.0')
+parser.add_argument('-p', '--port', dest='port', default=9115, type=int,
+                    help='HTTP server port. Default 9115')
+args = parser.parse_args()
+
 
 def get_config() -> dict:
-    with open('config.yml') as f:
+    config_path = args.config
+    with open(config_path) as f:
         config_data = yaml.load(f)
     return config_data
 
@@ -41,4 +53,4 @@ async def metrics(request):
 app = web.Application()
 app.router.add_get('/', index)
 app.router.add_get('/metrics', metrics)
-web.run_app(app, host='0.0.0.0', port=9115)
+web.run_app(app, host=args.host, port=args.port)
