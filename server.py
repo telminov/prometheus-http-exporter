@@ -43,7 +43,7 @@ async def is_probe_success(target: dict) -> bool:
         return False
 
 async def index(request):
-    return web.Response(text='<h1>HTTP exporter</h1><p><a href="/metrics">Metrics</a><p>')
+    return web.Response(text='<h1>HTTP exporter</h1><p><a href="/metrics">Metrics</a><p>', content_type='text/html')
 
 async def metrics(request):
     result = '# HELP probe_success Displays whether or not the probe was a success\n'
