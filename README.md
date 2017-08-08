@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/telminov/prometheus-http-exporter.svg?branch=master)](https://travis-ci.org/telminov/prometheus-http-exporter)
+
 # prometheus-http-exporter
 Prometheus http service status exporter
 
