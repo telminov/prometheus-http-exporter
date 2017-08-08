@@ -1,6 +1,7 @@
 FROM python:3.6
 
 RUN pip3 install aiohttp==2.2.5 \
+        pytest-aiohttp==3.2.0 \
         pyyaml==3.12
 
 COPY . /opt/app

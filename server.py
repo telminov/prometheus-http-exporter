@@ -14,6 +14,13 @@ parser.add_argument('-p', '--port', dest='port', default=9115, type=int,
 args = parser.parse_args()
 
 
+def create_app() -> web.Application:
+    app = web.Application()
+    app.router.add_get('/', index)
+    app.router.add_get('/metrics', metrics)
+    return app
+
+
 def get_config() -> dict:
     config_path = args.config
     with open(config_path) as f:
@@ -50,7 +57,6 @@ async def metrics(request):
     return web.Response(text=result)
 
 
-app = web.Application()
-app.router.add_get('/', index)
-app.router.add_get('/metrics', metrics)
-web.run_app(app, host=args.host, port=args.port)
+if __name__ == '__main__':
+    app = create_app()
+    web.run_app(app, host=args.host, port=args.port)
