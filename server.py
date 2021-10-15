@@ -24,7 +24,7 @@ def create_app() -> web.Application:
 def get_config() -> dict:
     config_path = args.config
     with open(config_path) as f:
-        config_data = yaml.load(f)
+        config_data = yaml.load(f, yaml.Loader)
     return config_data
 
 
@@ -33,7 +33,7 @@ async def is_probe_success(target: dict) -> bool:
         url = target['url']
         verify_ssl = target.get('verify_ssl', True)
 
-        connector = TCPConnector(verify_ssl=verify_ssl)
+        connector = TCPConnector(ssl=verify_ssl)
         async with ClientSession(connector=connector) as session:
             with async_timeout.timeout(10):
                 async with session.get(url) as response:
@@ -42,8 +42,10 @@ async def is_probe_success(target: dict) -> bool:
         print(ex)
         return False
 
+
 async def index(request):
     return web.Response(text='<h1>HTTP exporter</h1><p><a href="/metrics">Metrics</a><p>', content_type='text/html')
+
 
 async def metrics(request):
     result = '# HELP probe_success Displays whether or not the probe was a success\n'
